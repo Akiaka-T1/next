@@ -1,0 +1,77 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* 중앙 정렬 */
+    justify-content: center; /* 중앙 정렬 */
+    gap: 40px; /* 캐러셀 간의 간격 증가 */
+    padding: 20px;
+    height: 80%;
+    min-height: 100vh; /* 화면 중앙에 위치하도록 */
+  }
+  
+  .carousel {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 80%; /* 캐러셀을 페이지 폭에 맞춤 */
+  }
+  
+  .carouselContent {
+    display: flex;
+    overflow: hidden;
+    scroll-behavior: smooth;
+    width: 100%;
+    gap: 20px; /* 포스트 간의 간격 추가 */
+  }
+  
+  .post {
+    flex: 0 0 25%;
+    text-align: center;
+    padding: 10px;
+    background-color: white; /* 하얀색 네모 상자 */
+    border: 1px solid #ddd; /* 경계선 추가 */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* 약간의 그림자 추가 */
+    transition: transform 0.2s ease;
+  }
+  
+  .post:hover {
+    transform: scale(1.05);
+  }
+  
+  .thumbnail {
+    width: 100%;
+    height: auto;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+  }
+  
+  .placeholderBox {
+    width: 100%;
+    height: 200px; /* 임시 박스 크기 */
+    background-color: #f0f0f0; /* 연한 회색 배경 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px dashed #ccc; /* 점선 경계 */
+  }
+  
+  .arrowLeft, .arrowRight {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    border: none;
+    color: white;
+    padding: 10px;
+    cursor: pointer;
+    z-index: 1;
+  }
+  
+  .arrowLeft {
+    left: 0;
+  }
+  
+  .arrowRight {
+    right: 0;
+  }
+  
