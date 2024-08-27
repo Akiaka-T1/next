@@ -5,7 +5,7 @@
   align-items: center;
   gap: 40px;
   padding: 20px;
-  min-height: 100vh;
+  /*min-height: 100vh;*/
 }
 
 .carouselWrapper {
@@ -31,12 +31,13 @@
 
 .carouselContent {
   display: flex;
-  transition: transform 0.3s ease-in-out;
-  gap: 20px;
+  height: 155px;
+  /* transition: transform 0.3s ease-in-out; */
+  gap: 30px;
 }
 
 .post {
-  flex: 0 0 18%; /* 기본 상태: 각 항목이 5개씩 보이도록 너비를 18%로 설정 */
+  flex: 0 0 20%; /* 기본 상태: 각 항목이 5개씩 보이도록 너비를 18%로 설정 */
   text-align: center;
   padding: 10px;
   background-color: white;
@@ -63,7 +64,7 @@
 
 .placeholderBox {
   width: 100%;
-  height: 200px;
+  height: 80%;
   background-color: #f0f0f0;
   display: flex;
   align-items: center;
@@ -90,6 +91,39 @@
 .arrowRight {
   right: 0;
 }
+
+/* 기존 스타일 아래에 추가 */
+
+.carouselHeader {
+  display: flex;
+  justify-content: space-between; /* 제목과 정렬 메뉴 사이의 공간을 최대로 */
+  align-items: center;
+  margin-bottom: 2px;
+}
+
+.sortOptions {
+  display: flex;
+  gap: 15px; /* 버튼 간의 간격 */
+  margin-right: 10px; /* 우측에 약간의 여백 추가 */
+}
+
+.sortOptions button {
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.sortOptions button:hover {
+  color: #ddd; /* 마우스를 올렸을 때 약간 밝은 흰색으로 변경 */
+}
+
+.sortOptions .activeSort {
+  color: #ffcc00; /* 활성화된 정렬 옵션의 글자색을 노란색으로 설정 */
+}
+
 
 /* 반응형 디자인 */
 @media (max-width: 1200px) {
