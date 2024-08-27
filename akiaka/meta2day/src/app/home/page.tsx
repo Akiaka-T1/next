@@ -36,7 +36,7 @@ const HomePage = () => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const res = await fetch('/api/user');
+        const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/user`); // 절대 경로 사용
         const data = await res.json();
         setUser(data);
       } catch (err) {
@@ -46,7 +46,7 @@ const HomePage = () => {
 
     const fetchPosts = async () => {
       try {
-        const res = await fetch('/api/posts');
+        const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/posts`); // 절대 경로 사용
         const data = await res.json();
         setPosts(data.data || []); // Updated to reflect correct response structure
       } catch (err) {
