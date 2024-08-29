@@ -1,15 +1,14 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
-import { usePathname, useRouter } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import { useSelector } from 'react-redux';
-import styles from './movie-detail.module.css';
+import styles from './music-detail.module.css';
 
-export default function HomeDetail() {
-  const router = useRouter();
+export default function MusicDetail() {
   const pathname = usePathname();
 
-  // pathname에서 id 추출 (e.g., "/home/home-detail/1" -> "1")
+  // pathname에서 id 추출 (e.g., "/home/music-detail/1" -> "1")
   const id = pathname.split('/').pop();
 
   const [post, setPost] = useState<any>(null);
@@ -22,7 +21,7 @@ export default function HomeDetail() {
 
   useEffect(() => {
     if (id) {
-      fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/posts/${id}`) // 절대 경로 사용
+      fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/posts/${id}`)
         .then(res => res.json())
         .then(data => setPost(data))
         .catch(err => console.error(err));
@@ -50,7 +49,7 @@ export default function HomeDetail() {
   return (
     <div className={styles.container}>
       <div className={styles.mainImageSection} style={{ backgroundImage: `url(${post?.backGroundImgURL})` }}>
-        {!post?.backGroundImgURL && <div className={styles.imagePlaceholder}>Coming Soon</div>}
+        {!post?.backGroundImgURL && <div className={styles.imagePlaceholder}>music Coming Soon</div>}
       </div>
 
       <div className={styles.contentSection}>
@@ -60,28 +59,13 @@ export default function HomeDetail() {
 
         <div className={styles.infoSection}>
           <div className={styles.thumbnailPlaceholder}>
-            {post?.thumbnailURL ? <img src={post.thumbnailURL} alt={post.title} /> : <p>Thumbnail Image</p>}
+            {post?.thumbnailURL ? <img src={post.thumbnailURL} alt={post.title} /> : <p>Album Image</p>}
           </div>
-          <div className={styles.movieInfo}>
+          <div className={styles.musicInfo}>
             <p>{post?.score || 'Loading...'} 점</p>
             <p>{post?.content || 'Loading...'}</p>
           </div>
         </div>
-      </div>
-
-      <div className={styles.trailerSection}>
-        {post?.youtubeURL ? (
-          <iframe
-            src={post.youtubeURL}
-            title="YouTube video player"
-            frameBorder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-            className={styles.trailer}
-          />
-        ) : (
-          <div className={styles.trailerPlaceholder}>Trailer - Coming Soon</div>
-        )}
       </div>
 
       <div className={styles.ratingSection}>

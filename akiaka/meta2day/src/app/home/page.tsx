@@ -36,7 +36,7 @@ const HomePage = () => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/user`); // 절대 경로 사용
+        const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/user`);
         const data = await res.json();
         setUser(data);
       } catch (err) {
@@ -46,9 +46,9 @@ const HomePage = () => {
 
     const fetchPosts = async () => {
       try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/posts`); // 절대 경로 사용
+        const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/posts`);
         const data = await res.json();
-        setPosts(data.data || []); // Updated to reflect correct response structure
+        setPosts(data.data || []);
       } catch (err) {
         console.error('Error fetching posts:', err);
       }
@@ -57,6 +57,12 @@ const HomePage = () => {
     fetchUser();
     fetchPosts();
   }, []);
+
+  /////////////////////////////////////////////////////////////////////////////////////
+  //      캐러셀 아이템도 현재 포스팅 된 작품이 없어서 이미지, 제목이 연결되지 않음.     ///
+  //      168번 줄의 내용이                                                         ///
+  //      메인 케러셀의 아이템이 없으면 메인에서 이미지가 안나오고 placeholder표시      ///
+  ////////////////////////////////////////////////////////////////////////////////////
 
   const placeholderPosts = Array.from({ length: 10 }, (_, index) => ({
     id: index + 1,
@@ -115,6 +121,27 @@ const HomePage = () => {
     }));
   };
 
+  ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  // 현재 => categoryId가 영화로 분류되어있는 캐러셀에 들어가 있는 item이라서 영화 세부페이지가 열린다.                  //
+  //      => 즉, 작품의 categoryid가 아니라 캐러셀의 categoryid를 보고 각 세부페이지를 연다.                           //
+  //                                                                                                              //
+  // 수정할 => 작품 자체의 categoryid를 가지고 각 캐러셀로 들어가야하고.(이미 되어있음. : renderCarousel 함수)          // 
+  //       => 즉, 세부페이지 여는 방식만 작품의 categoryid를 쓰는 걸로 하면 됨. 지금은 들어온 작품이 없어서 보류.        //
+  //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  const getDetailPageLink = (categoryId: number, postId: number) => {
+    switch (categoryId) {
+      case 1: // 영화
+        return `/home/home-detail/${postId}`;
+      case 2: // 음악
+        return `/home/music-detail/${postId}`;
+      case 3: // 책
+        return `/home/book-detail/${postId}`;
+      default:
+        return `/home/home-detail/${postId}`;
+    }
+  };
+
   const renderCarousel = (title: string, categoryId: number, index: number) => {
     const carouselRef = useRef<HTMLDivElement>(null);
     currentRefs.current[index] = 0;
@@ -141,7 +168,7 @@ const HomePage = () => {
           <div className={styles.carouselContent} ref={carouselRef}>
             {(filteredPosts.length > 0 ? filteredPosts : placeholderPosts).map((post, i) => (
               <div className={styles.post} key={post.id}>
-                <Link href={`/home/home-detail/${post.id}`}>
+                <Link href={getDetailPageLink(categoryId, post.id)}>
                   {post.thumbnailURL ? (
                     <img src={post.thumbnailURL} alt={post.title} className={styles.thumbnail} />
                   ) : (
@@ -150,7 +177,6 @@ const HomePage = () => {
                     </div>
                   )}
                 </Link>
-                <h3>{post.title}</h3>
               </div>
             ))}
           </div>
